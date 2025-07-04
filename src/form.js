@@ -29,8 +29,6 @@ export default function NameForm() {
     const [data, setData] = React.useState(null);
     const [isStatus, setStatus] = React.useState(STATUS.IDLE);
     const [touched, setTouched] = React.useState({});
-    const [finish, setFinished] = React.useState(false);
-    const [loginError, setLoginError] = React.useState(null)
 
     React.useEffect(() => {
         setRequestStatus(REQUEST_STATUS.LOADING);
@@ -79,8 +77,6 @@ export default function NameForm() {
         if (isValid) {
 
             setStatus(STATUS.COMPLETED);
-            setFinished(prev => !prev)
-
 
         } else {
             setStatus(STATUS.SUBMITTED);
@@ -88,7 +84,7 @@ export default function NameForm() {
     }
 
     function ValidateEmail(inputText) {
-        var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
         if (inputText.match(mailformat)) {
             return true;
         }
@@ -110,8 +106,6 @@ export default function NameForm() {
 
         return result;
     }
-
-    if (loginError) throw loginError
 
 
     if (isStatus === "SUBMITTING" || requestStatus === REQUEST_STATUS.LOADING) return (<div className="container">...LOADING</div>)

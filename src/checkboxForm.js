@@ -1,6 +1,6 @@
 'use client'
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { FormContext } from './contexts/formContext';
 import AnimatedPage from './AnimatedPage';
 import axios from 'axios';
@@ -29,7 +29,7 @@ export default function CheckBoxForm() {
     const [requestStatus, setRequestStatus] = React.useState(REQUEST_STATUS.LOADING)
     const [data, setData] = React.useState(null);
     const [isStatus, setStatus] = React.useState(STATUS.IDLE);
-    const [touched, setTouched] = React.useState({});
+
     const [showError, setShowError] = React.useState(false);
     const [loginError, setLoginError] = React.useState('')
 
@@ -84,23 +84,7 @@ export default function CheckBoxForm() {
         });
     }
 
-    function handleBlur(e) {
-        const { name } = e.target;
-        setTouched((prevState) => {
-            return {
-                ...prevState,
-                [name]: true,
-            };
-        });
 
-    }
-
-
-    function showFormError(params) {
-        if (!isValid) {
-            setShowError(true);
-        }
-    }
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -174,7 +158,7 @@ export default function CheckBoxForm() {
                                     name={info.name}
                                     checked={checkboxstatus[info.name]}
                                     onChange={handleChg}
-                                    onBlur={handleBlur}
+
                                 />
                                 <label htmlFor="isFriendly" dangerouslySetInnerHTML={{ __html: info.label }}></label>
 

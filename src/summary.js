@@ -71,7 +71,7 @@ function Summary() {
                 )
                 }
 
-                {((formData.nysc === "no") || (formData.nysc === " ")) && (
+                {((formData.nysc === "no") || (formData.nysc.length === 0)) && (
                     <div className='summaryHeader3'>
                         <h5>NYSC Certificate:</h5>
                         <p>
@@ -81,7 +81,7 @@ function Summary() {
                 )
                 }
 
-                {((formData.birth === "no") || (formData.birth === " ")) && (
+                {((formData.birth === "no") || (formData.birth.length === 0)) && (
                     <div className='summaryHeader3'>
                         <h5>Birth Certificate:</h5>
                         <p>
@@ -90,7 +90,7 @@ function Summary() {
                     </div>
                 )}
 
-                {!date && formData.date === " " && (
+                {((date === false) || (formData.date.length === 0)) && (
                     <div className='summaryHeader3'>
                         <h5>Induction Date:</h5>
                         <p>

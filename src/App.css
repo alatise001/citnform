@@ -68,17 +68,6 @@
   font-weight: 400;
 }
 
-.formSubtitle {
-  /* font-size: 1.5rem; */
-  /* font-size: calc(1rem + 2vmin); */
-  /* padding: 1.5rem 0; */
-  /* max-width: 80%; */
-  /* white-space: p; */
-  /* font-weight: 400; */
-  /* color: #1a1b27; */
-  /* margin-bottom: 1rem; */
-}
-
 .form {
   /* outline: auto; */
   display: flex;

@@ -1,4 +1,4 @@
-import React, { useReducer } from "react"
+import React from "react"
 
 export const FormContext = React.createContext()
 
@@ -15,9 +15,9 @@ function FormContextProvider({ children }) {
         phone_number: "",
         educational_qualification: "None",
         professional_qualification: "None",
-        date: " ",
-        nysc: " ",
-        birth: " ",
+        date: "",
+        nysc: "",
+        birth: "",
         attestation: ""
     } || localState);
 

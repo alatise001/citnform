@@ -1,6 +1,5 @@
 import React from 'react';
-import { Link, useParams } from "react-router-dom";
-import Back from './hooks/back';
+import { useParams } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import { FormContext } from './contexts/formContext';
 import AnimatedPage from './AnimatedPage';
@@ -33,9 +32,7 @@ export default function DropdownForm() {
     const [requestStatus, setRequestStatus] = React.useState(REQUEST_STATUS.LOADING)
     const [data, setData] = React.useState(null);
     const [isStatus, setStatus] = React.useState(STATUS.IDLE);
-    const [touched, setTouched] = React.useState({});
-    const [finish, setFinished] = React.useState(false);
-    const [loginError, setLoginError] = React.useState(null)
+
 
 
 
@@ -72,16 +69,7 @@ export default function DropdownForm() {
         });
     }
 
-    function handleBlur(e) {
-        const { name } = e.target;
-        setTouched((prevState) => {
-            return {
-                ...prevState,
-                [name]: true,
-            };
-        });
 
-    }
 
 
     async function handleSubmit(e) {
@@ -90,7 +78,7 @@ export default function DropdownForm() {
 
         if (isValid) {
             setStatus(STATUS.COMPLETED);
-            setFinished(prev => !prev)
+
 
         } else {
             setStatus(STATUS.SUBMITTED);
@@ -105,9 +93,6 @@ export default function DropdownForm() {
 
         return result;
     }
-
-    if (loginError) throw loginError
-
 
     if (isStatus === "SUBMITTING" || requestStatus === REQUEST_STATUS.LOADING) return (<div className="container">...LOADING</div>)
 
@@ -128,7 +113,6 @@ export default function DropdownForm() {
                             name={filiteredData[0].name}
                             id={filiteredData[0].name}
                             onChange={handleChg}
-                            onBlur={handleBlur}
                             value={formData[slug]}
                         >
 

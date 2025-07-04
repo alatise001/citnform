@@ -1,4 +1,3 @@
-import React from 'react'
 import { differenceInMonths, parseISO } from 'date-fns';
 
 function isOverAYearOld(dateString) {

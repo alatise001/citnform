@@ -1,58 +1,29 @@
 import React from 'react';
-import { FormContext } from './contexts/formContext';
 import AnimatedPage from './AnimatedPage';
 import axios from 'axios';
 
 
-const STATUS = {
-    IDLE: "IDLE",
-    SUBMITTED: "SUBMITTED",
-    SUBMITTING: "SUBMITTING",
-    COMPLETED: "COMPLETED",
-};
 
-const REQUEST_STATUS = {
-    LOADING: "loading",
-    SUCCESS: "success",
-    FAILURE: "failure"
-}
+
 
 function Redirection() {
-
-    const { formData, setFormData } = React.useContext(FormContext)
-    const [redirect, setRedirect] = React.useState(false);
-    const [requestStatus, setRequestStatus] = React.useState(REQUEST_STATUS.LOADING)
+    // const [requestStatus, setRequestStatus] = React.useState(REQUEST_STATUS.LOADING)
     const [data, setData] = React.useState(null);
 
     React.useEffect(() => {
-        setRequestStatus(REQUEST_STATUS.LOADING);
+        // setRequestStatus(REQUEST_STATUS.LOADING);
         async function fetchData() {
             try {
                 const result = await axios.get('/data.json');
                 setData(result.data.note);
-                setRequestStatus(REQUEST_STATUS.SUCCESS)
+                // setRequestStatus(REQUEST_STATUS.SUCCESS)
             } catch (error) {
-                setRequestStatus(REQUEST_STATUS.FAILURE);
+                // setRequestStatus(REQUEST_STATUS.FAILURE);
                 console.log('Error fetching data:', error);
             }
         }
         fetchData();
     }, []);
-
-
-
-    React.useEffect(() => {
-        const isQualified = formData.educational_qualification !== "None" &&
-            formData.professional_qualification !== "None" &&
-            (2025 - formData.year) >= 1 &&
-            formData.attestation === true &&
-            formData.nysc === "yes" &&
-            formData.birth === "yes";
-
-        if (isQualified) {
-            setRedirect(true);
-        }
-    }, [formData.attestation, formData.birth, formData.educational_qualification, formData.nysc, formData.professional_qualification, formData.year])
 
 
     return (

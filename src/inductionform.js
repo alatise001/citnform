@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Link } from "react-router-dom";
-import Back from './hooks/back';
+
 import { FormContext } from './contexts/formContext';
 import { useNavigate } from 'react-router-dom';
 import AnimatedPage from './AnimatedPage';
@@ -28,11 +28,13 @@ export default function InductionForm() {
 
     const [isStatus, setStatus] = React.useState(STATUS.IDLE);
     const [touched, setTouched] = React.useState({});
-    const [finish, setFinished] = React.useState(false);
-    const [loginError, setLoginError] = React.useState(null)
+
 
     const errors = getErrors();
     const isValid = Object.keys(errors).length === 0;
+
+    console.log(isValid);
+    console.log(formData.date.length);
 
     function handleChg(e) {
         const { name, value, checked, type } = e.target;
@@ -62,7 +64,7 @@ export default function InductionForm() {
 
         if (isValid) {
             setStatus(STATUS.COMPLETED);
-            setFinished(prev => !prev)
+
 
         } else {
             setStatus(STATUS.SUBMITTED);
@@ -78,7 +80,7 @@ export default function InductionForm() {
         return result;
     }
 
-    if (loginError) throw loginError
+
 
 
     if (isStatus === "SUBMITTING") return (<div className="container">...LOADING</div>)
@@ -128,7 +130,7 @@ export default function InductionForm() {
                             <button
                                 className="subBtn"
                                 type="submit"
-                                disabled={!(isValid)}
+                                disabled={!(formData.date)}
                             >
                                 Next
                             </button>

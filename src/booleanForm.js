@@ -31,9 +31,6 @@ export default function BooleanForm() {
     const [requestStatus, setRequestStatus] = React.useState(REQUEST_STATUS.LOADING)
     const [data, setData] = React.useState(null);
     const [isStatus, setStatus] = React.useState(STATUS.IDLE);
-    const [touched, setTouched] = React.useState({});
-    const [finish, setFinished] = React.useState(false);
-    const [loginError, setLoginError] = React.useState(null)
 
     React.useEffect(() => {
         setRequestStatus(REQUEST_STATUS.LOADING);
@@ -75,7 +72,7 @@ export default function BooleanForm() {
         if (isValid) {
             console.log("submit");
             setStatus(STATUS.COMPLETED);
-            setFinished(prev => !prev)
+
 
         } else {
             setStatus(STATUS.SUBMITTED);
@@ -92,8 +89,6 @@ export default function BooleanForm() {
 
         return result;
     }
-
-    if (loginError) throw loginError
 
 
     if (isStatus === "SUBMITTING" || requestStatus === REQUEST_STATUS.LOADING) return (<div className="container">...LOADING</div>)
