@@ -4,33 +4,47 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import { FormContext } from './contexts/formContext';
 import AnimatedPage from './AnimatedPage';
+import axios from 'axios';
 
+const STATUS = {
+    IDLE: "IDLE",
+    SUBMITTED: "SUBMITTED",
+    SUBMITTING: "SUBMITTING",
+    COMPLETED: "COMPLETED",
+};
 
-// import Image from 'next/image'
-// import Link from 'next/link'
+const REQUEST_STATUS = {
+    LOADING: "loading",
+    SUCCESS: "success",
+    FAILURE: "failure"
+}
+
 
 export default function NameForm() {
 
+
+
     const { formData, setFormData } = React.useContext(FormContext)
-    console.log(formData);
-
-    const STATUS = {
-        IDLE: "IDLE",
-        SUBMITTED: "SUBMITTED",
-        SUBMITTING: "SUBMITTING",
-        COMPLETED: "COMPLETED",
-    };
-
-
-    // const [formData, setFormData] = React.useState({
-    //     name: "",
-
-    // });
-
+    const [requestStatus, setRequestStatus] = React.useState(REQUEST_STATUS.LOADING)
+    const [data, setData] = React.useState(null);
     const [isStatus, setStatus] = React.useState(STATUS.IDLE);
     const [touched, setTouched] = React.useState({});
-    const [finish, setFinished] = React.useState(false);
-    const [loginError, setLoginError] = React.useState(null)
+
+    React.useEffect(() => {
+        setRequestStatus(REQUEST_STATUS.LOADING);
+        async function fetchData() {
+            try {
+                const result = await axios.get('/data.json');
+                setData(result.data.kyc);
+                setRequestStatus(REQUEST_STATUS.SUCCESS)
+            } catch (error) {
+                setRequestStatus(REQUEST_STATUS.FAILURE);
+                console.log('Error fetching data:', error);
+            }
+        }
+        fetchData();
+    }, []);
+
 
     const errors = getErrors();
     const isValid = Object.keys(errors).length === 0;
@@ -56,35 +70,45 @@ export default function NameForm() {
 
     }
 
-
     async function handleSubmit(e) {
         e.preventDefault();
         setStatus(STATUS.SUBMITTING);
 
         if (isValid) {
-            console.log("submit");
+
             setStatus(STATUS.COMPLETED);
-            setFinished(prev => !prev)
-            console.log(formData);
-            // dispatch({ type: "setForm", data: formData })
+
         } else {
             setStatus(STATUS.SUBMITTED);
         }
     }
 
+    function ValidateEmail(inputText) {
+        var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+        if (inputText.match(mailformat)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
     function getErrors(params) {
         const result = {}
 
-        if (!formData.name) result.name = "Please enter your name";
+        data && data.forEach(item => {
+            if (!formData[item.name]) {
+                result[item.name] = item.alert;
+            } else if (item.name === 'email' && !ValidateEmail(formData[item.name])) {
+                result[item.name] = "Please enter a valid email address";
+            }
+        })
 
         return result;
     }
 
-    if (loginError) throw loginError
 
-
-    if (isStatus === "SUBMITTING") return (<div className="container">...LOADING</div>)
+    if (isStatus === "SUBMITTING" || requestStatus === REQUEST_STATUS.LOADING) return (<div className="container">...LOADING</div>)
 
 
     return (
@@ -92,33 +116,40 @@ export default function NameForm() {
 
             <div className="form">
 
-                <h2 className='formSubtitle'>Welcome to the CITN Screening Process</h2>
+                <h2 className='formSubtitle'>Please enter your details</h2>
 
                 <form onSubmit={handleSubmit}>
 
-                    <div className='inputDiv'>
-                        <label htmlFor="name">Please enter your name to proceed:</label>
+                    {
+                        data.map((item, index) => (
 
-                        <input
-                            type="text"
-                            name="name"
-                            placeholder="Enter your name"
-                            onChange={handleChg}
-                            onBlur={handleBlur}
-                            value={formData.name}
-                        />
-                        <p className="error" role="alert">
-                            {(touched.name || isStatus === STATUS.SUBMITTED) && errors.name}
-                        </p>
+                            <div key={index} className='inputDiv'>
+                                <label htmlFor="name">{item.label}</label>
 
-                    </div>
+                                <input
+                                    type={item.type}
+                                    name={item.name}
+                                    placeholder={item.placeholder}
+                                    onChange={handleChg}
+                                    onBlur={handleBlur}
+                                    value={formData[item.name]}
+                                />
+                                <p className="error" role="alert">
+                                    {(touched[item.name] || isStatus === STATUS.SUBMITTED) && errors[item.name]}
+                                </p>
+
+                            </div>
+                        ))
+                    }
+
+
 
                     {/* <br /> */}
-                    <Link className='links' to={`/institution`}>
+                    <Link className='links' to={`/certification/educational_qualification`}>
                         <button
                             className="subBtn"
                             type="submit"
-                            disabled={!(formData.name || formData.name)}
+                            disabled={!isValid}
                         >
                             Next
                         </button>

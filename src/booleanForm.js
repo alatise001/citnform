@@ -1,40 +1,55 @@
 'use client'
 
 import React from 'react';
-import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import { FormContext } from './contexts/formContext';
 import AnimatedPage from './AnimatedPage';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 
-// import Image from 'next/image'
-// import Link from 'next/link'
+const STATUS = {
+    IDLE: "IDLE",
+    SUBMITTED: "SUBMITTED",
+    SUBMITTING: "SUBMITTING",
+    COMPLETED: "COMPLETED",
+};
 
+const REQUEST_STATUS = {
+    LOADING: "loading",
+    SUCCESS: "success",
+    FAILURE: "failure"
+}
 
-export default function OutstandingPaymentrForm() {
+export default function BooleanForm() {
+    const { slug } = useParams();
+
 
     const navigate = useNavigate();
 
     const { formData, setFormData } = React.useContext(FormContext)
-    console.log(formData);
-
-    const STATUS = {
-        IDLE: "IDLE",
-        SUBMITTED: "SUBMITTED",
-        SUBMITTING: "SUBMITTING",
-        COMPLETED: "COMPLETED",
-    };
-
-
-    // const [formData, setFormData] = React.useState({
-    //     outPayment: "",
-
-    // });
-
+    const [requestStatus, setRequestStatus] = React.useState(REQUEST_STATUS.LOADING)
+    const [data, setData] = React.useState(null);
     const [isStatus, setStatus] = React.useState(STATUS.IDLE);
-    const [touched, setTouched] = React.useState({});
-    const [finish, setFinished] = React.useState(false);
-    const [loginError, setLoginError] = React.useState(null)
+
+    React.useEffect(() => {
+        setRequestStatus(REQUEST_STATUS.LOADING);
+        async function fetchData() {
+            try {
+                const result = await axios.get('/data.json');
+                setData(result.data.boolean);
+                setRequestStatus(REQUEST_STATUS.SUCCESS)
+            } catch (error) {
+                setRequestStatus(REQUEST_STATUS.FAILURE);
+                console.log('Error fetching data:', error);
+            }
+        }
+        fetchData();
+    }, []);
+
+
+
+    const filiteredData = data ? data.filter(item => item.slug === slug) : [];
 
     const errors = getErrors();
     const isValid = Object.keys(errors).length === 0;
@@ -49,17 +64,6 @@ export default function OutstandingPaymentrForm() {
         });
     }
 
-    function handleBlur(e) {
-        const { name } = e.target;
-        setTouched((prevState) => {
-            return {
-                ...prevState,
-                [name]: true,
-            };
-        });
-
-    }
-
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -68,26 +72,26 @@ export default function OutstandingPaymentrForm() {
         if (isValid) {
             console.log("submit");
             setStatus(STATUS.COMPLETED);
-            setFinished(prev => !prev)
-            console.log(formData);
+
+
         } else {
             setStatus(STATUS.SUBMITTED);
         }
     }
 
 
+
+
     function getErrors(params) {
         const result = {}
 
-        if (!formData.outPayment) result.outPayment = "Please select an option";
+        if (!formData[slug]) result[slug] = "Please select an option";
 
         return result;
     }
 
-    if (loginError) throw loginError
 
-
-    if (isStatus === "SUBMITTING") return (<div className="container">...LOADING</div>)
+    if (isStatus === "SUBMITTING" || requestStatus === REQUEST_STATUS.LOADING) return (<div className="container">...LOADING</div>)
 
 
     return (
@@ -96,12 +100,12 @@ export default function OutstandingPaymentrForm() {
 
             <div className="form">
 
-                <h2 className='formSubtitle'>Outstanding Payment</h2>
 
+                <h2 className='formSubtitle' dangerouslySetInnerHTML={{ __html: filiteredData[0].title }}></h2>
                 <form onSubmit={handleSubmit}>
 
                     <div className='inputDiv'>
-                        <label htmlFor="outPayment">Do you have any outstanding payments with your former institution?</label>
+                        <label htmlFor={slug}>Please select "Yes" or "No"</label>
 
 
                         <div className='uploadRadioInnerDiv d-flex'>
@@ -110,9 +114,9 @@ export default function OutstandingPaymentrForm() {
                                 <input
                                     type="radio"
                                     id="yes"
-                                    name="outPayment"
+                                    name={slug}
                                     onChange={handleChg}
-                                    checked={formData.outPayment === "yes"}
+                                    checked={formData[slug] === "yes"}
                                     value="yes"
                                     className='radioInput'
                                 />
@@ -123,9 +127,9 @@ export default function OutstandingPaymentrForm() {
                                 <input
                                     type="radio"
                                     id="no"
-                                    name="outPayment"
+                                    name={slug}
                                     onChange={handleChg}
-                                    checked={formData.outPayment === "no"}
+                                    checked={formData[slug] === "no"}
                                     value="no"
                                     className='radioInput'
                                 />
@@ -141,21 +145,25 @@ export default function OutstandingPaymentrForm() {
                         <button
                             className="subBtn"
                             type="button"
-                            onClick={() => { navigate(-1) }}
+                            onClick={() => { navigate(-1) || navigate(`/${data[0].slug}`) }}
                         // disabled={!(formData.institution || formData.institution)}
                         >
                             Back
                         </button>
 
-                        <Link className='links' to={`/inductionPayment`}>
-                            <button
-                                className="subBtn"
-                                type="submit"
-                                disabled={!(formData.outPayment || formData.outPayment)}
-                            >
-                                Next
-                            </button>
-                        </Link>
+                        <button
+                            className="subBtn"
+                            type="button"
+                            onClick={() => {
+                                if (filiteredData[0].id === data.length - 1) {
+                                    navigate('/attestation');
+                                } else {
+                                    navigate(`/${data[0 + 1].slug}`);
+                                }
+                            }}
+                        >
+                            Next
+                        </button>
                     </div>
 
                 </form>

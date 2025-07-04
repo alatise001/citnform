@@ -1,21 +1,23 @@
+'use client'
+
 import React from 'react';
 import { Link } from "react-router-dom";
-import Back from './hooks/back';
-import { useNavigate } from 'react-router-dom';
-import { FormContext } from './contexts/formContext';
-import AnimatedPage from './AnimatedPage';
 
+import { FormContext } from './contexts/formContext';
+import { useNavigate } from 'react-router-dom';
+import AnimatedPage from './AnimatedPage';
 
 
 // import Image from 'next/image'
 // import Link from 'next/link'
 
-export default function GraduationForm() {
+export default function InductionForm() {
 
     const navigate = useNavigate();
 
     const { formData, setFormData } = React.useContext(FormContext)
-    console.log(formData);
+
+
 
     const STATUS = {
         IDLE: "IDLE",
@@ -24,19 +26,15 @@ export default function GraduationForm() {
         COMPLETED: "COMPLETED",
     };
 
-
-    // const [formData, setFormData] = React.useState({
-    //     institution: "",
-
-    // });
-
     const [isStatus, setStatus] = React.useState(STATUS.IDLE);
     const [touched, setTouched] = React.useState({});
-    const [finish, setFinished] = React.useState(false);
-    const [loginError, setLoginError] = React.useState(null)
+
 
     const errors = getErrors();
     const isValid = Object.keys(errors).length === 0;
+
+    console.log(isValid);
+    console.log(formData.date.length);
 
     function handleChg(e) {
         const { name, value, checked, type } = e.target;
@@ -65,10 +63,9 @@ export default function GraduationForm() {
         setStatus(STATUS.SUBMITTING);
 
         if (isValid) {
-            console.log("submit");
             setStatus(STATUS.COMPLETED);
-            setFinished(prev => !prev)
-            console.log(formData);
+
+
         } else {
             setStatus(STATUS.SUBMITTED);
         }
@@ -78,41 +75,42 @@ export default function GraduationForm() {
     function getErrors(params) {
         const result = {}
 
-        if (!formData.institution) result.institution = "Please enter your name";
+        if (!formData.date) result.date = "Please enter a date";
 
         return result;
     }
 
-    if (loginError) throw loginError
+
 
 
     if (isStatus === "SUBMITTING") return (<div className="container">...LOADING</div>)
 
 
     return (
+
         <AnimatedPage>
 
             <div className="form">
 
-                <h2 className='formSubtitle'>Select Your Graduated Institution</h2>
+                <h2 className='formSubtitle'>Date of Induction</h2>
 
                 <form onSubmit={handleSubmit}>
 
                     <div className='inputDiv'>
-                        <label htmlFor="institution">Choose institution:</label>
+                        <label htmlFor="date">Enter the date you got inducted:</label>
 
-                        <select
-                            name="institution"
-                            id="institution"
+                        <input
+                            type="date"
+                            name="date"
+                            min="1900" max="2099" step="1"
+                            placeholder="e.g. 2020"
                             onChange={handleChg}
                             onBlur={handleBlur}
-                            value={formData.institution}
-                        >
-                            <option value="None">None</option>
-                            <option value="ICAN">ICAN</option>
-                            <option value="CITN Tax Academy">CITN Tax Academy</option>
-                            <option value="CITN Tax Academy">FIRS JTB (Joint Tax Board)</option>
-                        </select>
+                            value={formData.date}
+                        />
+                        <p className="error" role="alert">
+                            {(touched.date || isStatus === STATUS.SUBMITTED) && errors.date}
+                        </p>
 
                     </div>
 
@@ -127,11 +125,12 @@ export default function GraduationForm() {
                         >
                             Back
                         </button>
-                        <Link className='links' to={`/gradutionYear`}>
+
+                        <Link className='links' to={`/nysc`}>
                             <button
                                 className="subBtn"
                                 type="submit"
-                            // disabled={!(formData.institution || formData.institution)}
+                                disabled={!(formData.date)}
                             >
                                 Next
                             </button>

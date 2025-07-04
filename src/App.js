@@ -1,31 +1,32 @@
-import * as ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider, } from "react-router-dom";
-import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import './App.css';
+
 import NameForm from './form';
-import InstitutionForm from './graduationInstitutionform';
-import GraduationYearForm from './graduationYearform';
-import OutstandingPaymentForm from './outstandingpaymentform';
-import InductionPaymentForm from './inductionpaymentform';
 import Summary from "./summary";
+import BooleanForm from "./booleanForm";
+import DropdownForm from "./dropdownForm ";
+import InductionForm from "./inductionform";
+import CheckBoxForm from "./checkboxForm";
+import Redirection from "./redirection";
+
 function App() {
   const location = useLocation();
   return (
-    <div className="App">
+    <div className="app">
 
       <Link className='links' to={`/`}>
-        <header className="App-header">
-          <img src='/CITN-Logo.png' className="App-logo" alt="logo" />
+        <header className="app-header">
+          <img src='/CITN-Logo.png' className="app-logo" alt="logo" />
         </header>
       </Link>
 
       <div className='subtitleDiv'>
         <h2>
-          CITN
+          Welcome to CITN Direct Membership Eligiblity Form
         </h2>
-        <h3> Screening Process</h3>
+        {/* <h3>  Screening Process</h3> */}
       </div>
 
       <div className='formDiv'>
@@ -33,11 +34,13 @@ function App() {
 
           <Routes key={location.pathname} location={location}>
             <Route path="/" element={<NameForm />} />
-            <Route path="/institution" element={<InstitutionForm />} />
-            <Route path="/gradutionYear" element={<GraduationYearForm />} />
-            <Route path="/outstandingPayment" element={<OutstandingPaymentForm />} />
-            <Route path="/inductionPayment" element={<InductionPaymentForm />} />
+            <Route path="/certification/:slug" element={<DropdownForm />} />
+            <Route path="/:slug" element={<BooleanForm />} />
+            <Route path="/induction_year" element={<InductionForm />} />
+            <Route path="/attestation" element={<CheckBoxForm />} />
             <Route path="/summary" element={<Summary />} />
+
+            <Route path="/redirection" element={<Redirection />} />
 
           </Routes>
         </AnimatePresence>

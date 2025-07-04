@@ -1,4 +1,4 @@
-import React, { useReducer } from "react"
+import React from "react"
 
 export const FormContext = React.createContext()
 
@@ -6,36 +6,19 @@ export const FormContext = React.createContext()
 function FormContextProvider({ children }) {
 
 
-    // function formFunction(state, action) {
-    //     switch (action.type) {
-    //         case "setForm": {
-    //             return action.data
-    //         }
-    //         default:
-    //             return state
-    //     }
-
-    // }
-
-
-
     const localState = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem("form")) : null
 
-    // const [form, dispatch] = useReducer(formFunction, localState || {
-    //     name: "",
-    //     institution: "",
-    //     year: "",
-    //     outPayment: "",
-    //     inductionPayment: "",
-
-    // })
 
     const [form, setFormData] = React.useState({
-        name: "",
-        institution: "None",
-        year: 2024,
-        outPayment: "",
-        inductionPayment: "",
+        full_name: "",
+        email: "",
+        phone_number: "",
+        educational_qualification: "None",
+        professional_qualification: "None",
+        date: "",
+        nysc: "",
+        birth: "",
+        attestation: ""
     } || localState);
 
 
