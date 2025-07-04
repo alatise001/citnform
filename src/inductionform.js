@@ -2,21 +2,22 @@
 
 import React from 'react';
 import { Link } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
+import Back from './hooks/back';
 import { FormContext } from './contexts/formContext';
+import { useNavigate } from 'react-router-dom';
 import AnimatedPage from './AnimatedPage';
 
 
 // import Image from 'next/image'
 // import Link from 'next/link'
 
-
-export default function OutstandingPaymentrForm() {
+export default function InductionForm() {
 
     const navigate = useNavigate();
 
     const { formData, setFormData } = React.useContext(FormContext)
-    console.log(formData);
+
+
 
     const STATUS = {
         IDLE: "IDLE",
@@ -24,12 +25,6 @@ export default function OutstandingPaymentrForm() {
         SUBMITTING: "SUBMITTING",
         COMPLETED: "COMPLETED",
     };
-
-
-    // const [formData, setFormData] = React.useState({
-    //     outPayment: "",
-
-    // });
 
     const [isStatus, setStatus] = React.useState(STATUS.IDLE);
     const [touched, setTouched] = React.useState({});
@@ -66,10 +61,9 @@ export default function OutstandingPaymentrForm() {
         setStatus(STATUS.SUBMITTING);
 
         if (isValid) {
-            console.log("submit");
             setStatus(STATUS.COMPLETED);
             setFinished(prev => !prev)
-            console.log(formData);
+
         } else {
             setStatus(STATUS.SUBMITTED);
         }
@@ -79,7 +73,7 @@ export default function OutstandingPaymentrForm() {
     function getErrors(params) {
         const result = {}
 
-        if (!formData.outPayment) result.outPayment = "Please select an option";
+        if (!formData.date) result.date = "Please enter a date";
 
         return result;
     }
@@ -96,43 +90,26 @@ export default function OutstandingPaymentrForm() {
 
             <div className="form">
 
-                <h2 className='formSubtitle'>Outstanding Payment</h2>
+                <h2 className='formSubtitle'>Date of Induction</h2>
 
                 <form onSubmit={handleSubmit}>
 
                     <div className='inputDiv'>
-                        <label htmlFor="outPayment">Do you have any outstanding payments with your former institution?</label>
+                        <label htmlFor="date">Enter the date you got inducted:</label>
 
+                        <input
+                            type="date"
+                            name="date"
+                            min="1900" max="2099" step="1"
+                            placeholder="e.g. 2020"
+                            onChange={handleChg}
+                            onBlur={handleBlur}
+                            value={formData.date}
+                        />
+                        <p className="error" role="alert">
+                            {(touched.date || isStatus === STATUS.SUBMITTED) && errors.date}
+                        </p>
 
-                        <div className='uploadRadioInnerDiv d-flex'>
-
-                            <div className='uploadRadioInnerDiv-1 d-flex'>
-                                <input
-                                    type="radio"
-                                    id="yes"
-                                    name="outPayment"
-                                    onChange={handleChg}
-                                    checked={formData.outPayment === "yes"}
-                                    value="yes"
-                                    className='radioInput'
-                                />
-                                <label className='radioBtnLabel' htmlFor="yes">Yes</label>
-                            </div>
-
-                            <div className='uploadRadioInnerDiv-1 d-flex'>
-                                <input
-                                    type="radio"
-                                    id="no"
-                                    name="outPayment"
-                                    onChange={handleChg}
-                                    checked={formData.outPayment === "no"}
-                                    value="no"
-                                    className='radioInput'
-                                />
-                                <label className='radioBtnLabel' htmlFor="no"> No</label>
-                            </div>
-
-                        </div>
                     </div>
 
                     {/* <br /> */}
@@ -147,11 +124,11 @@ export default function OutstandingPaymentrForm() {
                             Back
                         </button>
 
-                        <Link className='links' to={`/inductionPayment`}>
+                        <Link className='links' to={`/nysc`}>
                             <button
                                 className="subBtn"
                                 type="submit"
-                                disabled={!(formData.outPayment || formData.outPayment)}
+                                disabled={!(isValid)}
                             >
                                 Next
                             </button>

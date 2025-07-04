@@ -1,11 +1,15 @@
-'use client'
-
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import Back from './hooks/back';
+import { useNavigate } from 'react-router-dom';
 import { FormContext } from './contexts/formContext';
 import AnimatedPage from './AnimatedPage';
 import axios from 'axios';
 
+
+
+// import Image from 'next/image'
+// import Link from 'next/link'
 const STATUS = {
     IDLE: "IDLE",
     SUBMITTED: "SUBMITTED",
@@ -19,10 +23,11 @@ const REQUEST_STATUS = {
     FAILURE: "failure"
 }
 
+export default function DropdownForm() {
+    const { slug } = useParams();
 
-export default function NameForm() {
 
-
+    const navigate = useNavigate();
 
     const { formData, setFormData } = React.useContext(FormContext)
     const [requestStatus, setRequestStatus] = React.useState(REQUEST_STATUS.LOADING)
@@ -32,12 +37,14 @@ export default function NameForm() {
     const [finish, setFinished] = React.useState(false);
     const [loginError, setLoginError] = React.useState(null)
 
+
+
     React.useEffect(() => {
         setRequestStatus(REQUEST_STATUS.LOADING);
         async function fetchData() {
             try {
                 const result = await axios.get('/data.json');
-                setData(result.data.kyc);
+                setData(result.data.dropdown);
                 setRequestStatus(REQUEST_STATUS.SUCCESS)
             } catch (error) {
                 setRequestStatus(REQUEST_STATUS.FAILURE);
@@ -46,6 +53,10 @@ export default function NameForm() {
         }
         fetchData();
     }, []);
+
+
+
+    const filiteredData = data ? data.filter(item => item.slug === slug) : [];
 
 
     const errors = getErrors();
@@ -72,41 +83,25 @@ export default function NameForm() {
 
     }
 
+
     async function handleSubmit(e) {
         e.preventDefault();
         setStatus(STATUS.SUBMITTING);
 
         if (isValid) {
-
             setStatus(STATUS.COMPLETED);
             setFinished(prev => !prev)
-
 
         } else {
             setStatus(STATUS.SUBMITTED);
         }
     }
 
-    function ValidateEmail(inputText) {
-        var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-        if (inputText.match(mailformat)) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
 
     function getErrors(params) {
         const result = {}
 
-        data && data.forEach(item => {
-            if (!formData[item.name]) {
-                result[item.name] = item.alert;
-            } else if (item.name === 'email' && !ValidateEmail(formData[item.name])) {
-                result[item.name] = "Please enter a valid email address";
-            }
-        })
+        if (!formData[slug]) result[slug] = "Please choose a certification";
 
         return result;
     }
@@ -122,44 +117,67 @@ export default function NameForm() {
 
             <div className="form">
 
-                <h2 className='formSubtitle'>Please enter your details</h2>
+                <h2 className='formSubtitle'>{filiteredData[0].title}</h2>
 
                 <form onSubmit={handleSubmit}>
 
-                    {
-                        data.map((item, index) => (
+                    <div className='inputDiv'>
+                        <label htmlFor={filiteredData[0].name}>{filiteredData[0].label}:</label>
 
-                            <div key={index} className='inputDiv'>
-                                <label htmlFor="name">{item.label}</label>
+                        <select
+                            name={filiteredData[0].name}
+                            id={filiteredData[0].name}
+                            onChange={handleChg}
+                            onBlur={handleBlur}
+                            value={formData[slug]}
+                        >
 
-                                <input
-                                    type={item.type}
-                                    name={item.name}
-                                    placeholder={item.placeholder}
-                                    onChange={handleChg}
-                                    onBlur={handleBlur}
-                                    value={formData[item.name]}
-                                />
-                                <p className="error" role="alert">
-                                    {(touched[item.name] || isStatus === STATUS.SUBMITTED) && errors[item.name]}
-                                </p>
+                            {
+                                filiteredData[0].options.map((option, index) => (
+                                    <option key={index} value={option.name}>
+                                        {option.name}
+                                    </option>
+                                ))
+                            }
+                        </select>
 
-                            </div>
-                        ))
-                    }
+                    </div>
 
 
+                    <div className='btnDiv'>
+                        <button
+                            className="subBtn"
+                            type="button"
+                            onClick={() => { navigate(-1) }}
+                        // disabled={!(formData.education || formData.education)}
+                        >
+                            Back
+                        </button>
 
-                    {/* <br /> */}
-                    <Link className='links' to={`/certification/educational_qualification`}>
+
+
                         <button
                             className="subBtn"
                             type="submit"
-                            disabled={!isValid}
+                            onClick={() => {
+                                if (formData[slug] === ("ACA (ICAN)") || formData[slug] === ("CNA (ANAN)")) {
+
+                                    navigate(`/induction_year`);
+                                } else {
+                                    if (filiteredData[0].id === data.length - 1) {
+                                        navigate('/nysc');
+                                    }
+                                    else {
+                                        navigate(`/certification/${data[0 + 1].slug}`);
+                                    }
+                                }
+                            }}
+                        // disabled={!(formData.institution)}
                         >
                             Next
                         </button>
-                    </Link>
+
+                    </div>
 
                 </form>
 

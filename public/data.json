@@ -1,0 +1,138 @@
+{
+  "dropdown": [
+    {
+      "id": 0,
+      "slug": "educational_qualification",
+      "name": "educational_qualification",
+      "title": "Educational Qualification",
+      "label": "Choose your minimum Qualification",
+      "options": [
+        {
+          "name": "None"
+        },
+        {
+          "name": "B.Sc"
+        },
+        {
+          "name": "HND"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "slug": "professional_qualification",
+      "name": "professional_qualification",
+      "title": "Professional Qualification",
+      "label": "Choose your Qualification",
+      "options": [
+        {
+          "name": "None"
+        },
+        {
+          "name": "JTB Final"
+        },
+        {
+          "name": "ACA (ICAN)"
+        },
+        {
+          "name": "CNA (ANAN)"
+        },
+        {
+          "name": "EAD (CITN Tax Academy)"
+        },
+        {
+          "name": "Lawayer Fast Track (CITN Tax Academy)"
+        }
+      ]
+    }
+  ],
+
+  "boolean": [
+    {
+      "id": 0,
+      "slug": "nysc",
+      "name": "nysc",
+      "title": "Do you have a NYSC Certificate <br> or Exemption Letter?"
+    },
+    {
+      "id": 1,
+      "slug": "birth",
+      "name": "birth",
+      "title": "Do you have a Birth Certificate?"
+    }
+  ],
+
+  "kyc": [
+    {
+      "id": 0,
+      "slug": "full_name",
+      "name": "full_name",
+      "title": "full name",
+      "label": "Enter your full name",
+      "alert": "Please enter your full name",
+      "placeholder": "e.g. John Doe",
+      "type": "text"
+    },
+    {
+      "id": 1,
+      "slug": "email",
+      "name": "email",
+      "title": "email",
+      "label": "Enter your email address",
+      "alert": "Please enter a valid email address",
+      "placeholder": "johndoe@gmail.com",
+      "type": "email"
+    },
+    {
+      "id": 2,
+      "slug": "phone_number",
+      "name": "phone_number",
+      "title": "phone number",
+      "label": "Enter your phone number",
+      "alert": "Please enter a valid phone number",
+      "placeholder": "e.g. +234 123 4567",
+      "type": "tel"
+    }
+  ],
+
+  "checkbox": [
+    {
+      "name": "attestation_letter",
+      "label": "You would need a <b> letter of Attestation </b>",
+      "error": "Please check this box to continue"
+    },
+
+    {
+      "name": "scanned_signature",
+      "label": "You would need your a <b>Scanned Signature</b>",
+      "error": "Please check this box to continue"
+    },
+    {
+      "name": "passport_photograph",
+      "label": "You would need some of <b>Your Passport Photograph</b>",
+      "error": "Please check this box to continue"
+    },
+    {
+      "name": "referee",
+      "label": "Your <b>Referee</b> must be a financial memeber of the institue",
+      "error": "Please check this box to continue"
+    }
+  ],
+
+  "note": [
+    {
+      "id": 0,
+      "slug": "notes",
+      "name": "notes",
+      "title": "Notes",
+      "note": "Your would be required to pay a <b>non refundble</b> registration fee of <b>₦20,000</b> </li>"
+    },
+    {
+      "id": 1,
+      "slug": "notes",
+      "name": "notes",
+      "title": "Notes",
+      "note": "Don't forget to check your mail for your activation email after registration."
+    }
+  ]
+}

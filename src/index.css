@@ -31,7 +31,14 @@
 body {
   /* line-height: 1.5; */
   -webkit-font-smoothing: antialiased;
-  min-height: 100vh;
+  height: 100vh;
+  font-size: calc(1rem + .1vmin);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  /* height: 0; */
 }
 
 /*
@@ -98,4 +105,11 @@ article {
 #root,
 #__next {
   isolation: isolate;
+}
+
+@media (min-width: 600px) {
+  body {
+
+    font-size: calc(1rem + .8vmin);
+  }
 }
