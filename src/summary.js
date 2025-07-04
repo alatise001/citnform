@@ -18,7 +18,7 @@ function Summary() {
     React.useEffect(() => {
         const isQualified = formData.educational_qualification !== "None" &&
             formData.professional_qualification !== "None" &&
-            date &&
+            (date || (formData.date.length === 0)) &&
             formData.attestation === true &&
             formData.nysc === "yes" &&
             formData.birth === "yes";
@@ -26,7 +26,7 @@ function Summary() {
         if (isQualified) {
             setRedirect(true);
         }
-    }, [formData.attestation, formData.birth, formData.educational_qualification, formData.nysc, formData.professional_qualification, date])
+    }, [formData.attestation, formData.birth, formData.educational_qualification, formData.nysc, formData.professional_qualification, date, formData.date.length])
 
     if (loading) return (<div className="container">...LOADING</div>)
 
@@ -90,7 +90,7 @@ function Summary() {
                     </div>
                 )}
 
-                {((date === false) || (formData.date.length === 0)) && (
+                {((date === false) && (formData.date.length !== 0)) && (
                     <div className='summaryHeader3'>
                         <h5>Induction Date:</h5>
                         <p>
