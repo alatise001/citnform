@@ -42,6 +42,15 @@
         },
         {
           "name": "Lawyer Fast Track (CITN Tax Academy)"
+        },
+        {
+          "name": "PROFESSOR of Economics"
+        },
+        {
+          "name": "PROFESSOR of Law"
+        },
+        {
+          "name": "PROFESSOR of Accounting"
         }
       ]
     }
@@ -109,7 +118,7 @@
     },
     {
       "name": "passport_photograph",
-      "label": "You would need some of <b>Your Passport Photograph</b>",
+      "label": "You would need to upload a <b>White Background Offical Passport Photograph</b>",
       "error": "Please check this box to continue"
     },
     {
