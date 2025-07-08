@@ -116,7 +116,7 @@
 
     {
       "name": "scanned_signature",
-      "label": "You would need your a <b>Scanned Signature</b>",
+      "label": "You would need your <b>Scanned Signature</b>",
       "error": "Please check this box to continue"
     },
     {
