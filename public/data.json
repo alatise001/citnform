@@ -41,7 +41,7 @@
           "name": "EAD (CITN Tax Academy)"
         },
         {
-          "name": "Lawayer Fast Track (CITN Tax Academy)"
+          "name": "Lawyer Fast Track (CITN Tax Academy)"
         }
       ]
     }
@@ -125,14 +125,14 @@
       "slug": "notes",
       "name": "notes",
       "title": "Notes",
-      "note": "Your would be required to pay a <b>non refundble</b> registration fee of <b>₦20,000</b> </li>"
+      "note": "Your would be required to pay a <b>non refundable</b> registration fee of <b>₦20,000</b> </li>"
     },
     {
       "id": 1,
       "slug": "notes",
       "name": "notes",
       "title": "Notes",
-      "note": "Don't forget to check your mail for your activation email after registration."
+      "note": "Don't forget to check your <b>mail inbox or spam</b> to activate your registration after successful payment."
     }
   ]
 }
