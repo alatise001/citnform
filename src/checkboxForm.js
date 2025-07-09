@@ -160,7 +160,7 @@ export default function CheckBoxForm() {
                                     onChange={handleChg}
 
                                 />
-                                <label htmlFor="isFriendly" dangerouslySetInnerHTML={{ __html: info.label }}></label>
+                                <label className='checkbox-label' htmlFor="isFriendly" dangerouslySetInnerHTML={{ __html: info.label }}></label>
 
                             </div>
 
