@@ -167,7 +167,11 @@ export default function CheckBoxForm() {
                         ))
                     }
                     <p className="error" role="alert">
-                        {showError && <p className='checkBoxError'> You need to check all the above boxes</p>}
+                        {showError && <p className='checkBoxError'>
+                            <b>
+                                Please confirm that you understand and will comply with these requirements by checking the boxes above.
+                            </b>
+                        </p>}
                     </p>
 
 
