@@ -1,39 +1,39 @@
-import React from "react"
+import React from "react";
 
-export const FormContext = React.createContext()
-
+export const FormContext = React.createContext();
 
 function FormContextProvider({ children }) {
-
-
-    const localState = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem("form")) : null
-
-
-    const [form, setFormData] = React.useState({
-        full_name: "",
-        email: "",
-        phone_number: "",
-        educational_qualification: "None",
-        professional_qualification: "None",
-        date: "",
-        nysc: "",
-        birth: "",
-        attestation: ""
-    } || localState);
-
+    const [form, setFormData] = React.useState(() => {
+        if (typeof window !== 'undefined') {
+            const saved = localStorage.getItem("form");
+            if (saved) {
+                return JSON.parse(saved);
+            }
+        }
+        return {
+            full_name: "",
+            email: "",
+            phone_number: "",
+            educational_qualification: "None",
+            professional_qualification: "None",
+            date: "",
+            nysc: "",
+            birth: "",
+            attestation: ""
+        };
+    });
 
     React.useEffect(() => {
-
-        localStorage.setItem("form", JSON.stringify(form));
+        if (typeof window !== 'undefined') {
+            localStorage.setItem("form", JSON.stringify(form));
+        }
     }, [form]);
 
     return (
-
-        < FormContext.Provider value={{ formData: form, setFormData }
-        }>
+        <FormContext.Provider value={{ formData: form, setFormData }}>
             {children}
-        </FormContext.Provider >
-    )
+        </FormContext.Provider>
+    );
 }
 
-export default FormContextProvider
+export default FormContextProvider;

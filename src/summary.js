@@ -153,7 +153,28 @@ function Summary() {
                     </>
                 )
                 }
+                <Link to={"/"} className='links'>
+                    <button className='subBtn resetBtn' onClick={() => {
+                        setFormData(() => {
+                            return {
+                                full_name: "",
+                                email: "",
+                                phone_number: "",
+                                educational_qualification: "None",
+                                professional_qualification: "None",
+                                date: "",
+                                nysc: "",
+                                birth: "",
+                                attestation: ""
+                            }
+                        })
+                        setloading(true);
 
+                    }}>
+                        Restart
+                    </button>
+
+                </Link>
             </div>
         </AnimatedPage >
 
