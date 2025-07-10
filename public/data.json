@@ -121,7 +121,7 @@
     },
     {
       "name": "passport_photograph",
-      "label": "You will need to upload a <b>White Background Offical Passport Photograph</b>.",
+      "label": "You will need to upload a <b>White Background Official Passport Photograph</b>.",
       "error": "Please check this box to continue"
     },
     {

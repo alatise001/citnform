@@ -42,9 +42,14 @@ function Summary() {
                 </h2>
 
                 {(redirect) ? (
-                    < h3 className='summaryHeader2'>
-                        You are  <b style={{ color: "green" }}>Eligible</b> to apply for <b>Direct Membership</b> of the Institute
-                    </h3>
+                    <>
+                        <h2 className='summaryHeader1'>
+                            Congratulations!!!
+                        </h2>
+                        < h3 className='summaryHeader2'>
+                            You are  <b style={{ color: "green" }}>Eligible</b> to apply for <b>Direct Membership</b> of the Institute
+                        </h3>
+                    </>
                 ) : (
                     <h3 className='summaryHeader2'>
                         Sorry, you are not <b style={{ color: "red" }}>Eligible</b> to apply for <b>Direct Membership</b> of the Institute
