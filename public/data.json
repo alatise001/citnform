@@ -110,7 +110,7 @@
   "checkbox": [
     {
       "name": "attestation_letter",
-      "label": "You would need to provide a <b> letter of Attestation </b>",
+      "label": "You would need to provide a <b> letter of Attestation from your employer</b>",
       "error": "Please check this box to continue"
     },
 
@@ -121,7 +121,7 @@
     },
     {
       "name": "passport_photograph",
-      "label": "You will need to upload a <b>White Background Offcial Passport Photograph</b>.",
+      "label": "You will need to upload a <b>White Background Offical Passport Photograph</b>.",
       "error": "Please check this box to continue"
     },
     {
