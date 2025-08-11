@@ -46,7 +46,7 @@ function Redirection() {
                 </ol>
 
                 <a
-                    href="https://www.citn.org/mem_reg.php?mtype=PFS"
+                    href="https://www.citn.org/mem_reg.php?mtype=DIRECT"
                     // target="_blank"
                     rel="noopener noreferrer"
                     style={{ textDecoration: 'none' }}
