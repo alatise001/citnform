@@ -36,7 +36,7 @@ export default function BooleanForm() {
         setRequestStatus(REQUEST_STATUS.LOADING);
         async function fetchData() {
             try {
-                const result = await axios.get('/data.json');
+                const result = await axios.get(`${process.env.PUBLIC_URL}/data.json`);
                 setData(result.data.boolean);
                 setRequestStatus(REQUEST_STATUS.SUCCESS)
             } catch (error) {
@@ -49,10 +49,10 @@ export default function BooleanForm() {
 
 
 
-    const filiteredData = data ? data.filter(item => item.slug === slug) : [];
+    const filiteredData = data ? data?.filter(item => item?.slug === slug) : [];
 
     const errors = getErrors();
-    const isValid = Object.keys(errors).length === 0;
+    const isValid = Object.keys(errors)?.length === 0;
 
     function handleChg(e) {
         const { name, value, checked, type } = e.target;
@@ -70,7 +70,6 @@ export default function BooleanForm() {
         setStatus(STATUS.SUBMITTING);
 
         if (isValid) {
-            console.log("submit");
             setStatus(STATUS.COMPLETED);
 
 
@@ -101,7 +100,7 @@ export default function BooleanForm() {
             <div className="form">
 
 
-                <h2 className='formSubtitle' dangerouslySetInnerHTML={{ __html: filiteredData[0].title }}></h2>
+                <h2 className='formSubtitle' dangerouslySetInnerHTML={{ __html: filiteredData[0]?.title }}></h2>
                 <form onSubmit={handleSubmit}>
 
                     <div className='inputDiv'>
@@ -145,7 +144,7 @@ export default function BooleanForm() {
                         <button
                             className="subBtn"
                             type="button"
-                            onClick={() => { navigate(-1) || navigate(`/${data[0].slug}`) }}
+                            onClick={() => { navigate(-1) || navigate(`/${data[0]?.slug}`) }}
                         // disabled={!(formData.institution || formData.institution)}
                         >
                             Back
@@ -155,10 +154,10 @@ export default function BooleanForm() {
                             className="subBtn"
                             type="button"
                             onClick={() => {
-                                if (filiteredData[0].id === data.length - 1) {
+                                if (filiteredData[0]?.id === data?.length - 1) {
                                     navigate('/attestation');
                                 } else {
-                                    navigate(`/${data[0 + 1].slug}`);
+                                    navigate(`/${data[0 + 1]?.slug}`);
                                 }
                             }}
                         >

@@ -40,7 +40,7 @@ export default function DropdownForm() {
         setRequestStatus(REQUEST_STATUS.LOADING);
         async function fetchData() {
             try {
-                const result = await axios.get('/data.json');
+                const result = await axios.get(`${process.env.PUBLIC_URL}/data.json`);
                 setData(result.data.dropdown);
                 setRequestStatus(REQUEST_STATUS.SUCCESS)
             } catch (error) {
@@ -53,11 +53,11 @@ export default function DropdownForm() {
 
 
 
-    const filiteredData = data ? data.filter(item => item.slug === slug) : [];
+    const filiteredData = data ? data?.filter(item => item?.slug === slug) : [];
 
 
     const errors = getErrors();
-    const isValid = Object.keys(errors).length === 0;
+    const isValid = Object.keys(errors)?.length === 0;
 
     function handleChg(e) {
         const { name, value, checked, type } = e.target;
@@ -102,24 +102,24 @@ export default function DropdownForm() {
 
             <div className="form">
 
-                <h2 className='formSubtitle'>{filiteredData[0].title}</h2>
+                <h2 className='formSubtitle'>{filiteredData[0]?.title}</h2>
 
                 <form onSubmit={handleSubmit}>
 
                     <div className='inputDiv'>
-                        <label htmlFor={filiteredData[0].name}>{filiteredData[0].label}:</label>
+                        <label htmlFor={filiteredData[0]?.name}>{filiteredData[0]?.label}:</label>
 
                         <select
-                            name={filiteredData[0].name}
-                            id={filiteredData[0].name}
+                            name={filiteredData[0]?.name}
+                            id={filiteredData[0]?.name}
                             onChange={handleChg}
                             value={formData[slug]}
                         >
 
                             {
-                                filiteredData[0].options.map((option, index) => (
-                                    <option key={index} value={option.name}>
-                                        {option.name}
+                                filiteredData[0]?.options.map((option, index) => (
+                                    <option key={index} value={option?.name}>
+                                        {option?.name}
                                     </option>
                                 ))
                             }
@@ -148,11 +148,11 @@ export default function DropdownForm() {
 
                                     navigate(`/induction_year`);
                                 } else {
-                                    if (filiteredData[0].id === data.length - 1) {
+                                    if (filiteredData[0]?.id === data?.length - 1) {
                                         navigate('/nysc');
                                     }
                                     else {
-                                        navigate(`/certification/${data[0 + 1].slug}`);
+                                        navigate(`/certification/${data[0 + 1]?.slug}`);
                                     }
                                 }
                             }}

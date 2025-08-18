@@ -12,21 +12,21 @@ function Summary() {
     const [loading, setloading] = React.useState(false);
 
 
-    const date = isOverAYearOld(formData.date);
+    const date = isOverAYearOld(formData?.date);
 
 
     React.useEffect(() => {
-        const isQualified = formData.educational_qualification !== "None" &&
-            formData.professional_qualification !== "None" &&
-            (date || (formData.date.length === 0)) &&
-            formData.attestation === true &&
-            formData.nysc === "yes" &&
-            formData.birth === "yes";
+        const isQualified = formData?.educational_qualification !== "None" &&
+            formData?.professional_qualification !== "None" &&
+            (date || (formData?.date.length === 0)) &&
+            formData?.attestation === true &&
+            formData?.nysc === "yes" &&
+            formData?.birth === "yes";
 
         if (isQualified) {
             setRedirect(true);
         }
-    }, [formData.attestation, formData.birth, formData.educational_qualification, formData.nysc, formData.professional_qualification, date, formData.date.length])
+    }, [formData?.attestation, formData?.birth, formData?.educational_qualification, formData?.nysc, formData?.professional_qualification, date, formData?.date.length])
 
     if (loading) return (<div className="container">...LOADING</div>)
 
@@ -38,7 +38,7 @@ function Summary() {
             <div className='summary'>
 
                 <h2 className='summaryHeader1'>
-                    Hi {formData.full_name},
+                    Hi {formData?.full_name},
                 </h2>
 
                 {(redirect) ? (
@@ -56,7 +56,7 @@ function Summary() {
                     </h3>
                 )}
 
-                {(formData.professional_qualification === "None") && (
+                {(formData?.professional_qualification === "None") && (
                     <div className='summaryHeader3'>
                         <h5>Professional Qualification:</h5>
                         <p>
@@ -66,7 +66,7 @@ function Summary() {
                 )
                 }
 
-                {(formData.educational_qualification === "None") && (
+                {(formData?.educational_qualification === "None") && (
                     <div className='summaryHeader3'>
                         <h5>Educational qualification:</h5>
                         <p>
@@ -76,7 +76,7 @@ function Summary() {
                 )
                 }
 
-                {((formData.nysc === "no") || (formData.nysc.length === 0)) && (
+                {((formData?.nysc === "no") || (formData?.nysc?.length === 0)) && (
                     <div className='summaryHeader3'>
                         <h5>NYSC Certificate:</h5>
                         <p>
@@ -86,7 +86,7 @@ function Summary() {
                 )
                 }
 
-                {((formData.birth === "no") || (formData.birth.length === 0)) && (
+                {((formData?.birth === "no") || (formData?.birth?.length === 0)) && (
                     <div className='summaryHeader3'>
                         <h5>Birth Certificate:</h5>
                         <p>
@@ -95,7 +95,7 @@ function Summary() {
                     </div>
                 )}
 
-                {((date === false) && (formData.date.length !== 0)) && (
+                {((date === false) && (formData?.date?.length !== 0)) && (
                     <div className='summaryHeader3'>
                         <h5>Induction Date:</h5>
                         <p>

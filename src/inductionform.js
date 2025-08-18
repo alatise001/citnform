@@ -33,9 +33,6 @@ export default function InductionForm() {
     const errors = getErrors();
     const isValid = Object.keys(errors).length === 0;
 
-    console.log(isValid);
-    console.log(formData.date.length);
-
     function handleChg(e) {
         const { name, value, checked, type } = e.target;
         setFormData((prevState) => {
@@ -75,7 +72,7 @@ export default function InductionForm() {
     function getErrors(params) {
         const result = {}
 
-        if (!formData.date) result.date = "Please enter a date";
+        if (!formData?.date) result.date = "Please enter a date";
 
         return result;
     }
@@ -106,7 +103,7 @@ export default function InductionForm() {
                             placeholder="e.g. 2020"
                             onChange={handleChg}
                             onBlur={handleBlur}
-                            value={formData.date}
+                            value={formData?.date}
                         />
                         <p className="error" role="alert">
                             {(touched.date || isStatus === STATUS.SUBMITTED) && errors.date}
@@ -130,7 +127,7 @@ export default function InductionForm() {
                             <button
                                 className="subBtn"
                                 type="submit"
-                                disabled={!(formData.date)}
+                                disabled={!(formData?.date)}
                             >
                                 Next
                             </button>

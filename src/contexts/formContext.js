@@ -5,7 +5,7 @@ export const FormContext = React.createContext();
 function FormContextProvider({ children }) {
     const [form, setFormData] = React.useState(() => {
         if (typeof window !== 'undefined') {
-            const saved = localStorage.getItem("form");
+            const saved = localStorage.getItem("citnform");
             if (saved) {
                 return JSON.parse(saved);
             }
@@ -25,7 +25,7 @@ function FormContextProvider({ children }) {
 
     React.useEffect(() => {
         if (typeof window !== 'undefined') {
-            localStorage.setItem("form", JSON.stringify(form));
+            localStorage.setItem("citnform", JSON.stringify(form));
         }
     }, [form]);
 
