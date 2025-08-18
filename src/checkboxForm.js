@@ -31,15 +31,15 @@ export default function CheckBoxForm() {
     const [isStatus, setStatus] = React.useState(STATUS.IDLE);
 
     const [showError, setShowError] = React.useState(false);
-    const [loginError, setLoginError] = React.useState('')
+
 
 
     React.useEffect(() => {
         setRequestStatus(REQUEST_STATUS.LOADING);
         async function fetchData() {
             try {
-                const result = await axios.get('/data.json');
-                setData(result.data.checkbox);
+                const result = await axios.get(`${process.env.PUBLIC_URL}/data.json`);
+                setData(result?.data?.checkbox);
                 setRequestStatus(REQUEST_STATUS.SUCCESS)
             } catch (error) {
                 setRequestStatus(REQUEST_STATUS.FAILURE);
@@ -103,11 +103,9 @@ export default function CheckBoxForm() {
 
             }).catch((error) => {
                 console.error('Error submitting data:', error);
-                setLoginError(error);
             });
             navigate('/summary');
             setStatus(STATUS.COMPLETED);
-            // setFinished(prev => !prev)
         } else {
             setStatus(STATUS.SUBMITTED);
         }
@@ -132,8 +130,6 @@ export default function CheckBoxForm() {
         return result;
     }
 
-    if (loginError) throw loginError
-
     if (isStatus === "SUBMITTING" || requestStatus === REQUEST_STATUS.LOADING) return (<div className="container">...LOADING</div>)
 
 
@@ -150,17 +146,17 @@ export default function CheckBoxForm() {
                     {
                         data.map((info, index) => (
 
-                            <div className='checkboxDiv d-flex'>
+                            <div key={index} className='checkboxDiv d-flex'>
                                 <input
                                     className='checkbox'
                                     type="checkbox"
-                                    id={info.name}
-                                    name={info.name}
-                                    checked={checkboxstatus[info.name]}
+                                    id={info?.name}
+                                    name={info?.name}
+                                    checked={checkboxstatus[info?.name]}
                                     onChange={handleChg}
 
                                 />
-                                <label className='checkbox-label' htmlFor="isFriendly" dangerouslySetInnerHTML={{ __html: info.label }}></label>
+                                <label className='checkbox-label' htmlFor="isFriendly" dangerouslySetInnerHTML={{ __html: info?.label }}></label>
 
                             </div>
 

@@ -18,7 +18,7 @@ function App() {
 
       <Link className='links' to={`/`}>
         <header className="app-header">
-          <img src='/CITN-Logo.png' className="app-logo" alt="logo" />
+          <img src={`${process.env.PUBLIC_URL}/CITN-Logo.png`} className="app-logo" alt="logo" />
         </header>
       </Link>
 

@@ -34,7 +34,7 @@ export default function NameForm() {
         setRequestStatus(REQUEST_STATUS.LOADING);
         async function fetchData() {
             try {
-                const result = await axios.get('/data.json');
+                const result = await axios.get(`${process.env.PUBLIC_URL}/data.json`);
                 setData(result.data.kyc);
                 setRequestStatus(REQUEST_STATUS.SUCCESS)
             } catch (error) {
@@ -47,7 +47,7 @@ export default function NameForm() {
 
 
     const errors = getErrors();
-    const isValid = Object.keys(errors).length === 0;
+    const isValid = Object.keys(errors)?.length === 0;
 
     function handleChg(e) {
         const { name, value, checked, type } = e.target;
@@ -97,10 +97,10 @@ export default function NameForm() {
         const result = {}
 
         data && data.forEach(item => {
-            if (!formData[item.name]) {
-                result[item.name] = item.alert;
-            } else if (item.name === 'email' && !ValidateEmail(formData[item.name])) {
-                result[item.name] = "Please enter a valid email address";
+            if (!formData[item?.name]) {
+                result[item?.name] = item?.alert;
+            } else if (item?.name === 'email' && !ValidateEmail(formData[item?.name])) {
+                result[item?.name] = "Please enter a valid email address";
             }
         })
 
@@ -124,18 +124,18 @@ export default function NameForm() {
                         data.map((item, index) => (
 
                             <div key={index} className='inputDiv'>
-                                <label htmlFor="name">{item.label}</label>
+                                <label htmlFor="name">{item?.label}</label>
 
                                 <input
-                                    type={item.type}
-                                    name={item.name}
-                                    placeholder={item.placeholder}
+                                    type={item?.type}
+                                    name={item?.name}
+                                    placeholder={item?.placeholder}
                                     onChange={handleChg}
                                     onBlur={handleBlur}
-                                    value={formData[item.name]}
+                                    value={formData[item?.name]}
                                 />
                                 <p className="error" role="alert">
-                                    {(touched[item.name] || isStatus === STATUS.SUBMITTED) && errors[item.name]}
+                                    {(touched[item?.name] || isStatus === STATUS.SUBMITTED) && errors[item?.name]}
                                 </p>
 
                             </div>

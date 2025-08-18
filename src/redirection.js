@@ -14,8 +14,8 @@ function Redirection() {
         // setRequestStatus(REQUEST_STATUS.LOADING);
         async function fetchData() {
             try {
-                const result = await axios.get('/data.json');
-                setData(result.data.note);
+                const result = await axios.get(`${process.env.PUBLIC_URL}/data.json`);
+                setData(result?.data?.note);
                 // setRequestStatus(REQUEST_STATUS.SUCCESS)
             } catch (error) {
                 // setRequestStatus(REQUEST_STATUS.FAILURE);
@@ -38,7 +38,7 @@ function Redirection() {
                 <ol className='d-flex'>
                     {
                         data && data.map((item, index) => (
-                            <li key={index} dangerouslySetInnerHTML={{ __html: item.note }} >
+                            <li key={index} dangerouslySetInnerHTML={{ __html: item?.note }} >
 
                             </li>
                         ))
